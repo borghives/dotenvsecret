@@ -1,10 +1,8 @@
 import logging
 import os
-from secret import SecretManager
-from typing import IO
+from dotenvsecret.secret import SecretManager, access_secret
 from typing import Optional
 from dotenv import load_dotenv
-from secret import access_secret
 
 load_dotenv()
 
