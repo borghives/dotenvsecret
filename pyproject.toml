@@ -10,3 +10,11 @@ dependencies = [
     "google-cloud-secret-manager>=2.26.0",
     "keyring>=25.7.0",
 ]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["dotenvsecret"]
+package-dir = {"dotenvsecret" = "py-dotenvsecret"}

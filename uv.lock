@@ -143,8 +143,8 @@ wheels = [
 
 [[package]]
 name = "dotenvsecret"
-version = "0.1.0"
-source = { virtual = "." }
+version = "0.1.2"
+source = { editable = "." }
 dependencies = [
     { name = "dotenv" },
     { name = "google-cloud-resource-manager" },
