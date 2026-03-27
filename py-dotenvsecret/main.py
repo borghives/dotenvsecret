@@ -4,12 +4,7 @@ from dotenvsecret.secret import SecretManager, access_secret
 from typing import Optional
 from dotenv import load_dotenv
 
-load_dotenv()
-
-
 logger = logging.getLogger(__name__)
-
-
 def _load_dotenvsecret_disabled() -> bool:
     """
     Determine if dotenv loading has been disabled.
@@ -21,7 +16,7 @@ def _load_dotenvsecret_disabled() -> bool:
     
 def load_dotenvsecret(
     dotenvsecret_path: str = ".envsecret",
-    manager: SecretManager = SecretManager.GCP_SECRET_MANAGER,
+    manager: Optional[SecretManager] = None,
     encoding: Optional[str] = "utf-8",
 ) -> bool:
     """Parse a .env file and then load all the variables found as environment variables.
@@ -49,6 +44,7 @@ def load_dotenvsecret(
             "dotenvsecret: .envsecret file not found at %s", dotenvsecret_path
         )
         return False
+
     
     with open(dotenvsecret_path, "r", encoding=encoding) as f:
         for line in f:
@@ -67,9 +63,16 @@ def load_dotenvsecret(
                 elif secret_id.startswith("'") and secret_id.endswith("'"):
                     secret_id = secret_id[1:-1]
 
+                secret_parts = secret_id.split(":")
+                secret_name = secret_parts[0]
+                version_id = "latest"
+                if len(secret_parts) == 2:
+                    version_id = secret_parts[1]
+
                 try:
                     secret_value = access_secret(
-                        secret_id=secret_id,
+                        secret_id=secret_name,
+                        version_id=version_id,
                         manager=manager,
                         encoding=encoding
                     )
