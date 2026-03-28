@@ -56,7 +56,6 @@ func loadDotenvsecretDisabled() bool {
 
 func loadFile(ctx context.Context, manager SecretManager, filename string) error {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		log.Printf("dotenvsecret: %s file not found at %s\n", filename, filename)
 		return nil
 	}
 
